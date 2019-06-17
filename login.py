@@ -14,7 +14,17 @@ class Login(QMainWindow):
 	@pyqtSlot()
 
 	def on_loginButton_clicked(self):
-		self.userEdit.setText(str(self.Auth.checkInput()))
+		if (self.userEdit.text() == "" and self.passEdit.text() == ""):
+			self.displayLabel.setText("Please enter a username and a password.")
+		elif (self.userEdit.text() == ""):
+			self.displayLabel.setText("Please enter a username.")	
+		elif (self.passEdit.text() == ""):
+			self.displayLabel.setText("Please enter a password.")
+		else:
+			flag, name = self.Auth.checkInput(self.userEdit.text(), self.passEdit.text())
+			if flag == 1:
+				name = name.rstrip()
+				self.displayLabel.setText("Welcome " + name + "!")
 
 
 app = QApplication(sys.argv)
