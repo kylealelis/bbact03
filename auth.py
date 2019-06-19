@@ -23,3 +23,17 @@ class Auth():
 			else:
 				searchIndex += 1
 				continue
+
+	def searchUser(self, user):
+		usercount = self.users.count(user)
+		if usercount < 1:
+			return False #Username not found
+		else:
+			return True
+
+	def addUser(self, user, pas, name):
+		self.users.append(user)
+		self.passes.append(pas)
+		self.names.append(name)
+		file = open ("data.csv", "a")
+		file.write(user + "," + pas + "," + name + "\n")
