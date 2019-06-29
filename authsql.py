@@ -10,7 +10,7 @@ class Auth():
 	def __init__(self):
 		database = "users.db" 
 		try:
-			self.connector = sqlite3.connect(database)
+			self.connector = sqlite3.connect(database, isolation_level = None)
 		except Error as e:
 			print(e)
 
@@ -35,4 +35,6 @@ class Auth():
 			return False
 
 	def addUser(self, user, pas, name):
+		newEntry = (user, pas, name)
 		cursor = self.connector.cursor()
+		cursor.execute("INSERT INTO Users(Username,Password,Name) VALUES (?,?,?)", newEntry)

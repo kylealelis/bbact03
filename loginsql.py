@@ -31,6 +31,8 @@ class Login(QMainWindow):
 				self.displayLabel.setText("Welcome " + name + "!")
 			elif flag == 2:
 				self.displayLabel.setText("Wrong password, please try again.")
+			else:
+				self.displayLabel.setText("Username not found.")
 
 
 	def onRegClicked(self):
@@ -38,7 +40,7 @@ class Login(QMainWindow):
 		if self.nameEdit.text() == "":
 			self.displayLabel.setText("To register, please enter your name.")
 		elif self.checkEdits():
-			if self.Auth.searchUser(inputUser):
+			if self.Auth.searchByUser(inputUser):
 				self.displayLabel.setText("Username already taken.")
 			else:
 				self.Auth.addUser(self.userEdit.text(), self.passEdit.text(), self.nameEdit.text())
