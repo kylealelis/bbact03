@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication,QMainWindow
 from PyQt5.uic import loadUi
-import auth as busi
+import authsql as busi
 
 class Login(QMainWindow):
 	def __init__(self):
@@ -28,7 +28,6 @@ class Login(QMainWindow):
 		if self.checkEdits():
 			flag, name = self.Auth.checkInput(self.userEdit.text(), self.passEdit.text())
 			if flag == 1:
-				name = name.rstrip()
 				self.displayLabel.setText("Welcome " + name + "!")
 			elif flag == 2:
 				self.displayLabel.setText("Wrong password, please try again.")
