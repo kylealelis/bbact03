@@ -9,8 +9,8 @@ class Login(QMainWindow):
 		super(Login, self).__init__()
 		loadUi('login.ui',self)
 		self.setWindowTitle('Login')
-		self.loginButton.clicked.connect(self.on_loginButton_clicked)
-		self.regButton.clicked.connect(self.on_regButton_clicked)
+		self.loginButton.clicked.connect(self.onLoginClicked)
+		self.regButton.clicked.connect(self.onRegClicked)
 		self.Auth = busi.Auth()
 	@pyqtSlot()
 
@@ -24,27 +24,26 @@ class Login(QMainWindow):
 		else:
 			return True
 
-	def on_loginButton_clicked(self):
+	def onLoginClicked(self):
 		if self.checkEdits():
 			flag, name = self.Auth.checkInput(self.userEdit.text(), self.passEdit.text())
 			if flag == 1:
 				name = name.rstrip()
 				self.displayLabel.setText("Welcome " + name + "!")
+			elif flag == 2:
+				self.displayLabel.setText("Wrong password, please try again.")
 
-	def on_regButton_clicked(self):
+
+	def onRegClicked(self):
 		inputUser = self.userEdit.text()
-		added = False
 		if self.nameEdit.text() == "":
 			self.displayLabel.setText("To register, please enter your name.")
 		elif self.checkEdits():
 			if self.Auth.searchUser(inputUser):
-				self.displayLabel.setText("Sorry, username is taken.")
+				self.displayLabel.setText("Username already taken.")
 			else:
 				self.Auth.addUser(self.userEdit.text(), self.passEdit.text(), self.nameEdit.text())
-				added = True
-
-		if added:
-			self.displayLabel.setText("User successfully added.")
+				self.displayLabel.setText("User successfully added!")
 
 
 app = QApplication(sys.argv)

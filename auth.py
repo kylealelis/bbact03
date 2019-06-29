@@ -12,17 +12,13 @@ class Auth():
 			self.names.append(stream[2])
 
 	def checkInput(self, user, pas):
-		searchIndex = 0
-		for x in self.users:
-			if x == user:
-				if pas == self.passes[searchIndex]: # Password verification
-					return 1, self.names[searchIndex] # User found, also returns name of user
-				else:
-					return 2, 0
-					continue
+		if self.searchUser(user):
+			if pas == self.passes[self.users.index(user)]:
+				return 1, self.names[self.users.index(user)] # Username and Password Match
 			else:
-				searchIndex += 1
-				continue
+				return 2, 0 # Username found, but password incorrect
+		else:
+			return 0, 0  # Username not found
 
 	def searchUser(self, user):
 		usercount = self.users.count(user)
